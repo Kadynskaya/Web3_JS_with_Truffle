@@ -21,11 +21,11 @@ const tokensDistribution = async (addressesArray, tokensAmount) => {
     try {
         for(let i = 0; i < addressesArray.length; i++) {
             let txCount = await web3.eth.getTransactionCount(account);
-            let gasPrice = 10 * (i + 1);
+            let gasPrice = 10;
             const txObject = {
                 nonce:  web3.utils.toHex(txCount.toString()),
                 gasLimit: web3.utils.toHex(800000),
-                gasPrice: web3.utils.toHex(web3.utils.toWei(gasPrice.toString(), 'gwei')),
+                gasPrice: web3.utils.toHex(web3.utils.toWei((gasPrice *= 1.1).toString(), 'gwei')),
                 to: contractAddress,
                 data: contract.methods.mint(addressesArray[i], tokensAmount).encodeABI()
             }
